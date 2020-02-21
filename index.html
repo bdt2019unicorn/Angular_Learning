@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    </head>
+
+    <body>
+        <div id="contents">
+            <p id="contents_p">
+                Here is the content p tag of my page
+            </p>
+            <button type="button" onclick="AngularSelectors()">
+                angular selector
+            </button>
+        </div>
+
+        <div id="angular_get_contents" ng-app="AngularApp" ng-controller="AngularController">
+            <p>Name: <input type="text" ng-model='name'></p>
+            <button ng-click="AngularGetValues()">Alert {{name}}</button>
+        </div>
+
+
+        <script>
+            function AngularSelectors()
+            {
+                var p = angular.element("#contents_p"); 
+                console.log(p); 
+            }
+
+
+        </script>
+
+        <script id="AngularScript">
+            var app = angular.module("AngularApp",[]); 
+            var angular_controller = function($scope)
+            {
+                $scope.AngularGetValues = function()
+                {
+                    alert($scope.name); 
+                }
+            }; 
+            // app.controller
+            // (
+            //     "AngularController",
+            //     function($scope)
+            //     {
+            //         $scope.AngularGetValues = function()
+            //         {
+            //             alert($scope.name); 
+            //         }
+            //     }
+            // ); 
+
+            app.controller('AngularController', angular_controller); 
+
+
+        </script>
+    </body>
+</html>

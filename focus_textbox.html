@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+        <style>
+            .error
+            {
+                border-color: red;
+            }
+            .focus
+            {
+                border-color: green;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container" ng-app="app" ng-controller="focus_controller">
+            <p>This is the focus textbox</p>
+            <input type="text" placeholder="Focus here..." ng-blur="on_blur($event.currentTarget,'focus')" ng-focus="on_focus($event.currentTarget,'focus')">
+            <input type="text" placeholder="Error!" ng-blur="on_blur($event.currentTarget,'error')" ng-focus="on_focus($event.currentTarget,'error')">
+        </div>
+
+        <script id="AngularScript">
+            var app = angular.module("app",[]); 
+            var focus_controller = function($scope)
+            {
+                $scope.on_focus = function(input, css_class)
+                {
+                    $(input).addClass(css_class); 
+                };
+                $scope.on_blur = function(input, css_class)
+                {
+                    $(input).removeClass(css_class); 
+                }
+            }
+            app.controller("focus_controller",focus_controller); 
+        </script>
+    </body>
+</html>

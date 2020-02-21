@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    </head>
+    <body>
+        <h1>This is to do app</h1>
+        <div class="container" ng-app="app" ng-controller="todo_controller">
+            <form ng-submit="add_todo()">
+                <input type="text" ng-model="todo_activity">
+            </form>
+
+            <h2>The one I type is {{todo_activity}}</h2>
+            <h2>Here is my to do list</h2>
+            <div ng-repeat="activity in todo_list">
+                <h3>{{activity}} <button ng-click="remove_activity(activity)">x</button></h3>
+            </div>            
+        </div>
+
+
+        <script id="AngularScript">
+            var app = angular.module("app",[]); 
+            var todo_controller = function($scope)
+            {
+                var support_functions = 
+                {
+                    ModifyList(list)
+                    {
+                        localStorage.setItem("todo_list",JSON.stringify(list)); 
+                        $scope.todo_list = JSON.parse(localStorage.getItem("todo_list")); 
+                    }, 
+                    GetList()
+                    {
+                        try 
+                        {
+                            return JSON.parse(localStorage.getItem("todo_list")); 
+                        }
+                        catch
+                        {
+                            return []; 
+                        }
+                    }
+                }; 
+
+                try 
+                {
+                    $scope.todo_list = JSON.parse(localStorage.getItem("todo_list")); 
+                }
+                catch
+                {
+                    $scope.todo_list = []; 
+                }
+                
+                $scope.add_todo = function()
+                {
+                    var todo_list = support_functions.GetList(); 
+                    todo_list.push($scope.todo_activity); 
+                    $scope.todo_activity = ""; 
+                    support_functions.ModifyList(todo_list); 
+                };
+                $scope.remove_activity = function(activity)
+                {
+                    var list = support_functions.GetList(); 
+                    var index = list.indexOf(activity); 
+                    list.splice(index,1); 
+                    support_functions.ModifyList(list); 
+                }                
+            }
+            app.controller("todo_controller",todo_controller); 
+        </script>
+    </body>
+</html>

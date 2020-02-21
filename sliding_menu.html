@@ -1,0 +1,62 @@
+<html>
+    <head>
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container" ng-app="app">
+            <div class="row" ng-controller="menu_controller">
+
+                <div ng-show="left_visible" ng-class="menu_class">
+                    <h2>Left Menu</h2>
+                    <ul>
+                        <li>item 1</li>
+                        <li>item 1</li>
+                        <li>item 1</li>
+                    </ul>
+                </div>
+
+                <div ng-class="content_class">
+                    <p>This is my content</p>
+                    
+                    <button type="button" ng-click="ShowHideMenu('left_visible')">Left Menu</button>
+                    <button type="button" ng-click="ShowHideMenu('right_visible')">Right Menu</button>
+                </div>
+
+                <div ng-show="right_visible" ng-class="menu_class">
+                    <h2>Right Menu</h2>
+                    <ul>
+                        <li>item 1</li>
+                        <li>item 1</li>
+                        <li>item 1</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <script id="AngularScript">
+            var app = angular.module("app",[]); 
+            var menu_controller = function($scope)
+            {
+                $scope.left_visible = false; 
+                $scope.right_visible = false; 
+
+                $scope.content_number = 12; 
+
+                $scope.content_class = "col-sm-"+$scope.content_number; 
+                $scope.menu_class = "col-sm-4"; 
+
+                $scope.ShowHideMenu = function(position)
+                {
+                    $scope[position] = !$scope[position]; 
+                    var number = $scope[position]==true?-1:1;
+                    $scope.content_number+=(4*number); 
+                    $scope.content_class = "col-sm-"+$scope.content_number; 
+                }
+            }; 
+            app.controller("menu_controller", menu_controller); 
+        </script>
+    </body>
+</html>
